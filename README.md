@@ -1,4 +1,4 @@
-# Home-Appliances-Controlled-by-Human-Voice
+# Home Appliances Controlled by Human Voice
 Remote control of household devices has long been explored in various ways. From electronic remote control using infrared sensor to voice controlled application, 
 we are continually trying to find a better way to control electrical and electronic devices to ease our daily life. This model presents the development of low-cost 
 remote home control system using an Arduino, a mobile device with some relay modules and a HC05 Bluetooth module. The system focused on controlling fan, lamp and other 
