@@ -5,3 +5,17 @@ remote home control system using an Arduino, a mobile device with some relay mod
 electrical appliances. The voice command is a serial input sent to the Arduino through a mobile application. The software will convert the voice into a string that the 
 microcontroller will process, then send the specific signals to the various relays and peripherals. The system will also include a basic level of security where it 
 requires a specific string before it allows any commands to go through. 
+
+# Procedure Flowchart
+
+![image](https://user-images.githubusercontent.com/48595863/132856494-3c728584-ae85-4dd8-9fe5-75014ea4b8d6.png)
+
+
+
+
+
+# Overall Connections
+
+![image](https://user-images.githubusercontent.com/48595863/132856701-caa9c7e2-a411-4392-a40d-9b3e451d5295.png)
+
+
