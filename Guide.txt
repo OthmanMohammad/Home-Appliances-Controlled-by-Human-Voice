@@ -1,0 +1,20 @@
+User Guide 
+  
+  After successfully connecting to the Bluetooth, you can initiate the transmission of 
+  desired commands using two methods, (by voice and by direct button). 
+ 
+Accepted Voice commands: 
+ 
+- To control the LED (ON-State): {“Lights on”, “Turn the Lights on”, “Turn on the Light”} 
+- To control the LED (OFF-State): {“Lights off”, “Turn the Lights off”, “Turn off the Light”} 
+ 
+- To control the Buzzer (ON-State): {“Buzzer on”, “Activate Buzzer”, “Alarm on”} 
+- To control the Buzzer (OFF-State): {“Buzzer off”, “Alarm off”} 
+ 
+- To control the Fan (ON-State): {“Fan on”, “Turn on the Fan”} 
+- To control the Fan (OFF-State): {“Fan off”, “Turn off the Fan”} 
+ 
+  Very important notice, each transiting command Must be preceded with the name {“Casper”}
+  in order to be accepted, e.g. Casper, Turn the lights on… 
+
+

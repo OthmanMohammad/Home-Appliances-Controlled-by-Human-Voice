@@ -1,0 +1,155 @@
+#include <SoftwareSerial.h>
+String data;
+String psswd = "123", admin="abc",s="", temp, buff;
+int x=0; // global variable to count number of time you tried to access bluetooth
+bool ok = false, pass=false, adm=false, padm=false, received=false; // padm means previous state of admin
+int count=0;
+int Connected=0;
+SoftwareSerial bluetooth(0, 11); // RX | TX
+void setup()
+{
+Serial.begin(9600); //Sets the baud for serial data transmission 
+bluetooth.begin(9600);
+for(int i = 13; i >=7 ; i--)pinMode(i,OUTPUT); // setting pins 13 12 11 10 9 as outputs
+pinMode(2,INPUT);
+
+digitalWrite(12,HIGH);
+digitalWrite(13,HIGH);
+digitalWrite(10,HIGH);
+digitalWrite(9,HIGH);
+digitalWrite(7,HIGH);
+padm=adm;
+
+}
+void getCommand() // take the serial input and save it into data variable
+{
+if(Serial.available()>0){
+data = Serial.readString();
+Serial.print(data);
+Serial.print("\n");}
+// check function below
+
+}
+void check (){
+
+if(data == psswd|| data== admin) {ok=true; data=""; Serial.print("Bluetooth Connected"); if(data==admin) adm=true;}
+else{ s+=data; data="";}
+if((s.length() >40) &&(!s.endsWith(" "))){ pass=true; x=0; count=0; temp=s; Serial.print(s); s="";} // send flag or use count x>3
+
+
+}
+void notification (){
+if(temp=="") bluetooth.println("There are no notiifications");
+else{
+bluetooth.println("Notification");delay(100); bluetooth.println(temp); // 
+} // the app should set received to True //send the wrong connection from the bluettoth MAC address
+// if(s.length() >30) bluetooth.println(s);
+
+}
+
+void allOff() // turn off all perfipherals
+{
+lightsOff();
+motorOff();
+fanOff();
+buzzerOff();
+
+}
+void allOn() // turn off all perfipherals
+{
+lightsOn();
+motorOn();
+fanOn();
+}
+void lightsOn() // turn lights on
+{
+digitalWrite(13,LOW); //this will need to be set to LOW if using the relay, if it is an led then fine
+
+
+}
+void lightsOff() // turn lights off
+{
+digitalWrite(13,HIGH); // needs to be set to HIGH if using relay
+
+}
+void motorOn() // motor rotates forwards
+{
+// needs 2 pins to control motor
+// 1 0 means forward
+digitalWrite(9,LOW);
+
+
+
+}
+void motorOff() // stops the motor
+{
+// 0 0 or 1 1 means stop/brake
+digitalWrite(9,HIGH);
+}
+void fanOn() // turn on the fan
+{
+digitalWrite(10,LOW);
+
+}
+void fanOff() // turns off the fan
+{
+digitalWrite(10,HIGH);
+}
+void buzzerOn() //turn on the buzzer
+{
+digitalWrite(7,HIGH);
+}
+void buzzerOff() // turn off the buzzer
+{
+digitalWrite(7,LOW);
+
+}
+/*
+void modify(){
+data.replace("change","");
+
+{data.remove(); data.remove(" ");psw=data;
+bluetooth.print("The password has been modify");}
+}
+*/
+void loop() { // put your main code here, to run repeatedly:
+
+if(count<2) {digitalWrite(12,HIGH); delay(2000); digitalWrite(12,LOW); count++; ok=false; if(count==1)Serial.println("Welcome to Casper");}
+if(!ok){getCommand(); check();}
+// wrong password x times. reset the bluetooth
+if(ok){ // you can use the Bluetooth 
+
+if(Serial.available()>0) 
+{
+getCommand();
+if(data=="off"){ count=0;
+
+}
+
+if(data == "lights on" || "Casper lights on" || "lights")lightsOn();
+else if(data == "lights off" || "Casper lights off")lightsOff();
+
+else if(data == "motor on" || data == "Casper motor on" || data == "motor")motorOn();
+else if(data == "motor off" || data == "Casper mtor off")motorOff();
+else if(data == "fan on" ||data == "Casper fan on" || data == "fan")fanOn();
+else if(data == "fan off" || data == "Casper fan off")fanOff();
+else if(data == "buzzer on" || data == "Casper buzzer on" || data == "buzzer")buzzerOn();
+else if(data == "buzzer off" || data == "Casper buzzer off")buzzerOff();
+else if(data == "all off" || data == "Casper all off")allOff();
+else if(data == "all on" || data == "Casper all on")allOn();
+
+
+}
+Connected=digitalRead(2);
+if(!Connected){ ok=false; adm=false; Serial.println("Enter Bluetooth Password");Serial.println("Bluetooth Disconnected");} // check the id for multi
+}
+buff+=data;
+if(data=="abc") {received=true; pass=false; if(temp=="")bluetooth.println("There are no notifications");
+bluetooth.println("Notifications");delay(100);bluetooth.println(temp);data=""; bluetooth.println(buff); temp=""; data="";}
+if((adm=true) && (pass=false))notification();
+if(data=="ack"){data=""; bluetooth.println(temp);}
+if((padm=false) && (adm=true)) notification();
+if(data=="buffer"){ data=""; bluetooth.println(buff); delay(100);}
+if(buff.length()>100) buff="";
+padm=adm; // send notification when admin connects
+}
